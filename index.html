@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أصيل - سيكولوجية المال</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Tajawal', sans-serif; }
+        .bg-money { background: linear-gradient(135deg, #064e3b 0%, #065f46 100%); }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+    <nav class="bg-money p-6 text-white shadow-2xl rounded-b-[40px] text-center">
+        <h1 class="text-3xl font-bold tracking-tight">أَصِيـل 💰</h1>
+        <p class="text-emerald-100 text-sm mt-1">حلل شخصيتك المالية وابدأ رحلة الثراء</p>
+    </nav>
+
+    <main class="container mx-auto px-4 mt-8 max-w-lg">
+        <div id="app-container" class="bg-white rounded-3xl shadow-xl p-8 border border-emerald-50">
+            
+            <div id="start-screen" class="text-center">
+                <div class="mb-6 text-6xl text-emerald-600">🧠</div>
+                <h2 class="text-xl font-bold mb-4 text-gray-800">اكتشف علاقتك النفسية بالمال</h2>
+                <p class="text-gray-500 mb-8">اختبار سريع يساعدك على فهم سلوكك المالي بناءً على "أصيل" لسيكولوجية المال.</p>
+                <button onclick="startApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-2xl transition duration-300 shadow-lg">
+                    ابدأ الاختبار المجاني
+                </button>
+            </div>
+
+            <div id="quiz-screen" class="hidden">
+                <div class="w-full bg-gray-200 h-1.5 rounded-full mb-6">
+                    <div id="progress" class="bg-emerald-500 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+                <h3 id="question-text" class="text-lg font-bold mb-6 text-gray-700 leading-relaxed"></h3>
+                <div id="options" class="space-y-4"></div>
+            </div>
+
+            <div id="result-screen" class="hidden text-center">
+                <div id="result-icon" class="text-6xl mb-4"></div>
+                <h3 class="text-gray-500 text-sm mb-1 uppercase tracking-widest">نتيجتك هي</h3>
+                <h2 id="result-title" class="text-3xl font-extrabold text-emerald-700 mb-4"></h2>
+                <p id="result-desc" class="text-gray-600 mb-8 leading-relaxed"></p>
+                
+                <div class="bg-emerald-50 p-4 rounded-2xl mb-6">
+                    <p class="text-xs text-emerald-800 font-bold mb-1">نصيحة "أصيل" لمؤسستك:</p>
+                    <p id="result-tip" class="text-emerald-700 text-sm italic"></p>
+                </div>
+
+                <button onclick="location.reload()" class="text-emerald-600 font-bold hover:underline">إعادة الاختبار</button>
+            </div>
+        </div>
+
+        <div class="mt-10 p-4 bg-gray-100 border-2 border-dashed border-gray-300 rounded-2xl text-center">
+            <p class="text-gray-400 text-xs">مساحة إعلانية (Google AdSense) لتحقيق دخل من الموقع</p>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                q: "كيف تشعر عندما ترى رصيدك في البنك يتناقص؟",
+                options: [
+                    { text: "قلق شديد ورغبة في الادخار", type: "saver" },
+                    { text: "لا أهتم كثيراً ما دمت استمتع بحياتي", type: "spender" },
+                    { text: "أفكر في كيفية إعادة تدوير ما تبقى للاستثمار", type: "investor" }
+                ]
+            },
+            {
+                q: "ما هو هدفك الأساسي من جني المال؟",
+                options: [
+                    { text: "الأمان والاطمئنان للمستقبل", type: "saver" },
+                    { text: "الحرية وشراء ما أريد الآن", type: "spender" },
+                    { text: "بناء ثروة وتوسيع نطاق أعمالي", type: "investor" }
+                ]
+            }
+        ];
+
+        let currentIdx = 0;
+        let scores = { saver: 0, spender: 0, investor: 0 };
+
+        function startApp() {
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const data = quizData[currentIdx];
+            document.getElementById('question-text').innerText = data.q;
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+            
+            data.options.forEach(opt => {
+                const b = document.createElement('button');
+                b.className = "w-full text-right p-4 border border-gray-200 rounded-2xl hover:bg-emerald-50 hover:border-emerald-300 transition text-gray-700 font-medium";
+                b.innerText = opt.text;
+                b.onclick = () => {
+                    scores[opt.type]++;
+                    currentIdx++;
+                    if(currentIdx < quizData.length) {
+                        showQuestion();
+                        document.getElementById('progress').style.width = (currentIdx / quizData.length * 100) + '%';
+                    } else {
+                        showResult();
+                    }
+                };
+                optionsDiv.appendChild(b);
+            });
+        }
+
+        function showResult() {
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+            
+            const winner = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+            const res = {
+                saver: { title: "المحافظ الذكي", icon: "🛡️", desc: "أنت تبحث عن الأمان المالي. قوتك في الانضباط، لكن احذر من الخوف من المخاطرة المحسوبة.", tip: "بما أنك تملك مؤسسة، خصص ميزانية للتوسع ولا تكتفِ بالادخار فقط." },
+                spender: { title: "المستمتع بالمال", icon: "🎈", desc: "المال بالنسبة لك وسيلة للسعادة. أنت كريم، لكنك تحتاج لنظام مالي يحميك من التقلبات.", tip: "حاول أتمتة الادخار في حسابات مؤسستك قبل البدء بالصرف." },
+                investor: { title: "المستثمر الطموح", icon: "🚀", desc: "أنت ترى المال كأداة للنمو. عقليتك هي عقلية صناع الثروة الحقيقيين.", tip: "استمر في تنويع مشاريعك، واجعل تطبيق أصيل بوابتك لفهم السوق." }
+            };
+
+            document.getElementById('result-title').innerText = res[winner].title;
+            document.getElementById('result-icon').innerText = res[winner].icon;
+            document.getElementById('result-desc').innerText = res[winner].desc;
+            document.getElementById('result-tip').innerText = res[winner].tip;
+        }
+    </script>
+</body>
+                  </html>
+                  
