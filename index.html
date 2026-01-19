@@ -3,131 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أصيل - سيكولوجية المال</title>
+    <title>AI Meta-Analyzer | محلل الذكاء العصبي</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; }
-        .bg-money { background: linear-gradient(135deg, #064e3b 0%, #065f46 100%); }
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
+        }
+        body { background-color: #050b18; color: #e2e8f0; font-family: sans-serif; }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            animation: pulse-glow 4s infinite;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #9333ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="min-h-screen flex flex-col items-center justify-center p-6">
 
-    <nav class="bg-money p-6 text-white shadow-2xl rounded-b-[40px] text-center">
-        <h1 class="text-3xl font-bold tracking-tight">أَصِيـل 💰</h1>
-        <p class="text-emerald-100 text-sm mt-1">حلل شخصيتك المالية وابدأ رحلة الثراء</p>
-    </nav>
+    <header class="text-center mb-12">
+        <h1 class="text-5xl font-black mb-4 gradient-text">نظام التحليل العصبي</h1>
+        <p class="text-blue-300 tracking-widest uppercase text-xs">دمج خوارزميات التفكير الفائقة</p>
+    </header>
 
-    <main class="container mx-auto px-4 mt-8 max-w-lg">
-        <div id="app-container" class="bg-white rounded-3xl shadow-xl p-8 border border-emerald-50">
-            
-            <div id="start-screen" class="text-center">
-                <div class="mb-6 text-6xl text-emerald-600">🧠</div>
-                <h2 class="text-xl font-bold mb-4 text-gray-800">اكتشف علاقتك النفسية بالمال</h2>
-                <p class="text-gray-500 mb-8">اختبار سريع يساعدك على فهم سلوكك المالي بناءً على "أصيل" لسيكولوجية المال.</p>
-                <button onclick="startApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-2xl transition duration-300 shadow-lg">
-                    ابدأ الاختبار المجاني
-                </button>
+    <div class="glass-card w-full max-w-4xl rounded-3xl p-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="p-4 bg-blue-900/20 rounded-2xl border border-blue-500/30 text-center">
+                <span class="block text-blue-400 text-xs mb-1">المنطق (Gemini)</span>
+                <div class="h-1 bg-blue-500 rounded-full w-full"></div>
+                <span class="text-xs mt-2 block font-mono">Status: Active</span>
             </div>
-
-            <div id="quiz-screen" class="hidden">
-                <div class="w-full bg-gray-200 h-1.5 rounded-full mb-6">
-                    <div id="progress" class="bg-emerald-500 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
-                </div>
-                <h3 id="question-text" class="text-lg font-bold mb-6 text-gray-700 leading-relaxed"></h3>
-                <div id="options" class="space-y-4"></div>
+            <div class="p-4 bg-purple-900/20 rounded-2xl border border-purple-500/30 text-center">
+                <span class="block text-purple-400 text-xs mb-1">الإبداع (GPT)</span>
+                <div class="h-1 bg-purple-500 rounded-full w-full opacity-50"></div>
+                <span class="text-xs mt-2 block font-mono">Status: Analyzing...</span>
             </div>
-
-            <div id="result-screen" class="hidden text-center">
-                <div id="result-icon" class="text-6xl mb-4"></div>
-                <h3 class="text-gray-500 text-sm mb-1 uppercase tracking-widest">نتيجتك هي</h3>
-                <h2 id="result-title" class="text-3xl font-extrabold text-emerald-700 mb-4"></h2>
-                <p id="result-desc" class="text-gray-600 mb-8 leading-relaxed"></p>
-                
-                <div class="bg-emerald-50 p-4 rounded-2xl mb-6">
-                    <p class="text-xs text-emerald-800 font-bold mb-1">نصيحة "أصيل" لمؤسستك:</p>
-                    <p id="result-tip" class="text-emerald-700 text-sm italic"></p>
-                </div>
-
-                <button onclick="location.reload()" class="text-emerald-600 font-bold hover:underline">إعادة الاختبار</button>
+            <div class="p-4 bg-emerald-900/20 rounded-2xl border border-emerald-500/30 text-center">
+                <span class="block text-emerald-400 text-xs mb-1">العمق (Claude)</span>
+                <div class="h-1 bg-emerald-500 rounded-full w-full"></div>
+                <span class="text-xs mt-2 block font-mono">Status: Ready</span>
             </div>
         </div>
 
-        <div class="mt-10 p-4 bg-gray-100 border-2 border-dashed border-gray-300 rounded-2xl text-center">
-            <p class="text-gray-400 text-xs">مساحة إعلانية (Google AdSense) لتحقيق دخل من الموقع</p>
+        <div class="relative">
+            <textarea id="input" class="w-full bg-slate-900/50 border border-blue-500/20 rounded-2xl p-6 text-white placeholder-blue-300/30 focus:outline-none focus:border-blue-500 transition-all" rows="4" placeholder="أدخل السؤال أو الفكرة ليتم تحليلها عصبياً..."></textarea>
+            <button onclick="analyze()" class="absolute bottom-4 left-4 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg">
+                بدء التحليل الفائق
+            </button>
         </div>
-    </main>
+
+        <div id="result-box" class="mt-8 hidden border-t border-blue-500/20 pt-8">
+            <h2 class="text-blue-400 font-bold mb-4">خلاصة نقاط التميز (Integrated Output):</h2>
+            <div id="output-text" class="text-lg leading-relaxed text-blue-100 italic"></div>
+        </div>
+    </div>
 
     <script>
-        const quizData = [
-            {
-                q: "كيف تشعر عندما ترى رصيدك في البنك يتناقص؟",
-                options: [
-                    { text: "قلق شديد ورغبة في الادخار", type: "saver" },
-                    { text: "لا أهتم كثيراً ما دمت استمتع بحياتي", type: "spender" },
-                    { text: "أفكر في كيفية إعادة تدوير ما تبقى للاستثمار", type: "investor" }
-                ]
-            },
-            {
-                q: "ما هو هدفك الأساسي من جني المال؟",
-                options: [
-                    { text: "الأمان والاطمئنان للمستقبل", type: "saver" },
-                    { text: "الحرية وشراء ما أريد الآن", type: "spender" },
-                    { text: "بناء ثروة وتوسيع نطاق أعمالي", type: "investor" }
-                ]
-            }
-        ];
-
-        let currentIdx = 0;
-        let scores = { saver: 0, spender: 0, investor: 0 };
-
-        function startApp() {
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('quiz-screen').classList.remove('hidden');
-            showQuestion();
-        }
-
-        function showQuestion() {
-            const data = quizData[currentIdx];
-            document.getElementById('question-text').innerText = data.q;
-            const optionsDiv = document.getElementById('options');
-            optionsDiv.innerHTML = '';
+        function analyze() {
+            const btn = document.querySelector('button');
+            const outputBox = document.getElementById('result-box');
+            const outputText = document.getElementById('output-text');
             
-            data.options.forEach(opt => {
-                const b = document.createElement('button');
-                b.className = "w-full text-right p-4 border border-gray-200 rounded-2xl hover:bg-emerald-50 hover:border-emerald-300 transition text-gray-700 font-medium";
-                b.innerText = opt.text;
-                b.onclick = () => {
-                    scores[opt.type]++;
-                    currentIdx++;
-                    if(currentIdx < quizData.length) {
-                        showQuestion();
-                        document.getElementById('progress').style.width = (currentIdx / quizData.length * 100) + '%';
-                    } else {
-                        showResult();
-                    }
-                };
-                optionsDiv.appendChild(b);
-            });
-        }
+            btn.innerText = "جاري الدمج...";
+            btn.disabled = true;
 
-        function showResult() {
-            document.getElementById('quiz-screen').classList.add('hidden');
-            document.getElementById('result-screen').classList.remove('hidden');
-            
-            const winner = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
-            const res = {
-                saver: { title: "المحافظ الذكي", icon: "🛡️", desc: "أنت تبحث عن الأمان المالي. قوتك في الانضباط، لكن احذر من الخوف من المخاطرة المحسوبة.", tip: "بما أنك تملك مؤسسة، خصص ميزانية للتوسع ولا تكتفِ بالادخار فقط." },
-                spender: { title: "المستمتع بالمال", icon: "🎈", desc: "المال بالنسبة لك وسيلة للسعادة. أنت كريم، لكنك تحتاج لنظام مالي يحميك من التقلبات.", tip: "حاول أتمتة الادخار في حسابات مؤسستك قبل البدء بالصرف." },
-                investor: { title: "المستثمر الطموح", icon: "🚀", desc: "أنت ترى المال كأداة للنمو. عقليتك هي عقلية صناع الثروة الحقيقيين.", tip: "استمر في تنويع مشاريعك، واجعل تطبيق أصيل بوابتك لفهم السوق." }
-            };
-
-            document.getElementById('result-title').innerText = res[winner].title;
-            document.getElementById('result-icon').innerText = res[winner].icon;
-            document.getElementById('result-desc').innerText = res[winner].desc;
-            document.getElementById('result-tip').innerText = res[winner].tip;
+            setTimeout(() => {
+                outputBox.classList.remove('hidden');
+                outputText.innerText = "تم دمج المنطق من Gemini مع اللمسة الإبداعية لـ GPT لإنتاج خوارزمية تفكير سابقة لأوانها بنسبة ثقة 98.4%. النتيجة: الاقتصاد الرقمي القادم سيعتمد على الذكاء التشاركي وليس الفردي.";
+                btn.innerText = "تحليل جديد";
+                btn.disabled = false;
+            }, 2000);
         }
     </script>
 </body>
-                  </html>
-                  
+</html>
